@@ -39,6 +39,10 @@ const refreshSavedItems = () =>
     ...app.data.items.map((item) => h("option", { value: item.name })),
   );
 
+// The page's own <title> stays on the default view, so search engines index it;
+// a tool picked by its address gets its own.
+const pageTitle = document.title;
+
 const show = () => {
   const id = location.hash.slice(1);
   const view = views.find((candidate) => candidate.id === id) ?? views[0];
@@ -68,7 +72,7 @@ const show = () => {
       tab.removeAttribute("aria-current");
     }
   }
-  document.title = `${view.heading} · Solvey GST Invoice`;
+  document.title = location.hash.length > 1 ? `${view.heading}, free | Solvey` : pageTitle;
 };
 
 const start = async () => {
